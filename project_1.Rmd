@@ -1,0 +1,541 @@
+---
+title: "R trialdata_report"
+author: "Cixiao Jiang, Mengjin Yan, Yu Pan, Xin Ye"
+date: "10/06/2021"
+output:
+html_document: default
+editor_options:
+markdown:
+wrap: 72
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 《Feasibility study on the operation and development of Mini-sternotomy--data from the patient survey on time to postoperative discharge after aortic valve replacement》
+
+## Abstract
+
+ Purpose：{\#sec:Intro}  Aortic valve replacement (AVR) is a common surgical procedure to treat heart diseases such as aortic stenosis. Full sternotomy (FS) is considered the \`gold standard' surgical procedure for AVR, while Mini-sternotomy (MS) is an alter- native procedure that is attractive due to potentially shorter patient recovery times.\
+ FS surgery is the standard mode of AVR surgery, while MS is a new treatment. Although it is better than the former in postoperative recovery, we have some questions about the safety and therapeutic effect of MS surgery. In this study, we hope to compare the surgical indications and postoperative effects of 490 patients with FS and 429 patients with MS, so as to objectively evaluate the efficacy and safety of MS. At the same time, we hope to further study whether the main factor affecting the postoperative quality of life of patients undergoing AVR surgery is the improvement of surgical methods. In other words, we hope to prove that the research and promotion of MS surgery has practical significance in clinical practice.
+
+ Methods：\
+ Grouping the patients according to the actual operation. The general conditions before operation (age, sex, BMI, etc.), postoperative conditions (vital capacity, recovery time, etc.) and follow-up conditions (postoperative quality of life) were compared between the two groups. Then LM regression model was established to find out the main influencing factors of postoperative quality of life of patients with AVR. The R-4.0.5 software was used to process and analyze the two groups of data and establish the model. The Wilcoxon rank-sum test was used for both qualitative and quantitative variables, and the difference was considered to be statistically significant when p was less than 0.05; LM model uses stepwise regression method to reduce the impact of multicollinearity, and it is considered that the model is significant when p is less than 0.05.
+
+ Result：\
+ There was no significant difference between the two groups in preoperative indexes and nurses' working experience (P \> 0.05); 14 cases died in FS operation group and 13 cases died in MS operation group. The mortality of the two groups was similar. In terms of postoperative situation and postoperative quality of life, it can be considered that the difference is statistically significant (P \< 0.05). LM model shows that the main influencing factors affecting patients' postoperative quality of life are surgical methods and hospital expenses.
+
+ Conclusion:\
+ We can see that Ms surgery is safe and effective. Compared with FS surgery, it has less trauma, less pain, shorter recovery time, and relatively higher postoperative quality of life, although the operation cost is also higher. However, in general, Ms surgery is worthy of clinical application, and its research and development is of positive significance.
+
+## 1 Introduction
+
+ Aortic valve replacement (AVR) is a kind of thoracic and cardiovascular surgery in which artificial valves are used to replace the original diseased or abnormal heart valves. The indications are aortic stenosis and aortic regurgitation. Aortic valve replacement (AVR) can be performed in two ways: median sternotomy (FS) or small upper sternotomy (MS):\
+ MS approach. With the patient anesthetized in accordance with standard protocol, skin was incised from halfway between the suprasternal notch and the sternal angle to the level of the fourth intercostal space, approximately 8 cm. The manubrium was divided in the midline from the suprasternal notch inferiorly and then into the right fourth intercostal space. The thymus was divided, and the pericardium was opened, exposing the ascending aorta, aortic root, and right atrial appendage. A 300 U/kg loading dose of unfractionated heparin followed by boluses of 5000 U was administered to achieve activated clotting time \>450 seconds. The aorta was cannulated using a wired flexible aortic cannula. The right atrial appendage was cannulated using a flat venous cannula, and CPB was initiated. The ascending aorta was cross-clamped and intermittent, antegrade, cold blood cardioplegia administered. The aorta was then incised open in an oblique or transverse fashion, the diseased valve was excised, and the annulus was decalcified. A suitably sized aortic valve prosthesis was inserted using either horizontal mattress 2-0 Ethicon sutures or semi-continuous 2-0 Proline sutures. Surgeons adopted either of these suture techniques and adhered to the same technique irrespective of the type of valve prosthesis or the surgical approach. The autotomy was then closed, the heart was deaired, right atrial and ventricular epicardial pacing wires were inserted, and the patient was weaned off. Once satisfactory functioning of the aortic valve prosthesis was confirmed by TOE, heparin was reversed with protamine (1 mg/100 U of heparin). Chest drains were inserted into the anterior mediastinum, posterior pericardial space, and pleural space as necessary. Sternal wires were inserted, and the incision was closed in layers. Conversion to FS was performed to ensure patient safety if access proved difficult or if intraoperative complications occurred.\
+ FS approach. Anesthesia and positioning of patients was the same as for the MS approach. The skin incision was made between the suprasternal notch and the xiphoid process and sternum divided in the midline from the suprasternal notch to the xiphoid process. A 2-stage venous cannula was used for atrial cannulation. The remaining steps were similar to those for the MS approach.\
+ From the operation methods of the two operations, we can see that the wound of MS operation is relatively small and the degree of pain is light, which has obvious advantages over the traditional FS operation, but its safety and effectiveness are not clear. We need to further verify our guess through research. It is hoped that through the study of two AVR surgical methods, we can get favorable results for patients' clinical treatment.
+
+## 2 Data and Statistical Methodology
+
+### 2.1 Research object
+
+ The Rdata file contains the simulated results of a clinical trial comparing patients who underwent MS to patients who underwent FS. It includes 24 variables.
+
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Variable name     | Variable meaning                                                                                                                                              |
++===================+===============================================================================================================================================================+
+| PatientId         | a unique numerical identier for each patient                                                                                                                  |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Allocated         | the surgery (MS or FS) which the patient was scheduled to undergo                                                                                             |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Received          | the actual surgery (MS or FS) that the patient underwent                                                                                                      |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Born              | the patient's date of birth                                                                                                                                   |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Surgery           | the patient's date of surgery                                                                                                                                 |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Consented         | the date on which the patient consented to participate in the study                                                                                           |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EuroSCORE         | a measure of the patient's risk of death (as a percentage),calculated prior to surgery                                                                        |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Male              | a binary variable taking the value TRUE if the patient is ma, or FALSE otherwise                                                                              |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| MIstrokeTIA       | a binary variable indicating whether the patient had suffered a myocardial infarction, stroke or a transient ischaemic attack in the 30 days prior to surgery |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CCS               | a measure of the severity of the patient's chest pain on a scale of 0 to 4 (Canadian Cardiovascular Society classication of angina).                          |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| BMI               | body mass index (kg=m2), a measure of the patient's obesity.                                                                                                  |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| COPD              | a binary variable indicating whether the patient had chronic ob- structive pulmonary disease prior to surgery.                                                |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| WalkingUnassisted | a binary variable indicating whether the patient was able to walk without assistance prior to surgery.                                                        |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CareHome          | a binary variable indicating whether the patient lives in a care home.                                                                                        |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| FEV1baseline      | pre-surgery lung function, FEV1 (forced expiratory volume in one second), measured by spirometry (litres).                                                    |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Discharge         | the date of the patient's discharge from hospital (i.e. the end of the patient's post-operative hospital stay).                                               |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| DeathDate         | the date of death for any patients who died within a year of surgery.                                                                                         |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CauseOfDeath      | the cause of death for any patients who died within a year of surgery.                                                                                        |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Nurse             | a unique identier for the nurse who measured the patient's pain.                                                                                              |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| NurseExperience   | the number of years of experience of the nurse who measured the patient's pain score.                                                                         |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Pain              | the patient's post-operative pain score, on a scale of 0 to 100, on the day after surgery.                                                                    |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| FEV1              | post-surgery lung function, FEV1 (forced expiratory volume in one second), measured by spirometry (litres) on the day of the patient's hospital discharge.    |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Cost              | relevant costs (\$) over the first year following surgery (including the costs of surgeries, drugs and hospital visits).                                      |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| QALYs             | quality adjusted life years, a measure of the patient's quality of life in the year after surgery, on a scale of 0 to 1.                                      |
++-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+### 2.2 Data Load
+
+```{r pressure, echo=TRUE}
+###Load the data and packages used
+setwd("~/Desktop/Clinical trial data")
+data <- get(load("~/Desktop/Clinical trial data/TrialData.Rdata"))
+library(dplyr)
+library(lubridate)
+library(lattice) 
+library(MASS)
+library(nnet)
+library(mice)
+library(ggplot2)
+library(corrgram)
+library(vcd)
+library(stats) 
+library(zoo)
+library(lmtest)
+library(gvlma) 
+library(Rmisc)
+library(plyr)
+library(ggridges)
+library(glmnet)
+library(foreign)
+```
+
+### 2.3 Data Processing
+
+#### 2.3.1 Variable Conversion
+
+ From the existing data, we can see that it contains five columns of dates, namely, date of birth, time of investigation, time of operation, time of discharge and time of death.\
+ (1) Since the follow-up time is only one year after the operation, the vast majority of patients are in a state of survival during the follow-up time. Moreover, among the dead patients, the causes of death are diverse, so it is difficult to analyze whether it is related to the operation. Therefore, we do not consider the time of death for the time being, and delete the two columns of time of death and cause of death.\
+ (2) Then, we can calculate the age of the patient at the time of operation from the time of birth and the time of operation. From the time of operation and the time of discharge, we can calculate the recovery time of the patient after operation, and establish two new variables, age (unit: year) and recovery time (unit: day).
+
+```{r echo=TRUE}
+#The age at the time of surgery was obtained from the difference between the date of birth and the date of surgery
+data = mutate(data, age=year(as.period(interval(data$Born, data$Surgery),'year')))#Assign the growth of age to ‘data’
+age <- year(as.period(interval(data$Born, data$Surgery),'year'))
+#The postoperative recovery time was calculated from the discharge time and operation date
+data = mutate(data, recovery_time=day(as.period(interval(data$Surgery, data$Discharge),'day')))#An assignment is used in the data to increase a column of postoperative recovery time
+recovery_time <- day(as.period(interval(trialdata$Surgery, trialdata$Discharge),'day'))
+data <- data[ , !names(data) %in% c("DeathDate","CauseOfDeath")] #Select all variables except these two variables to generate a new data frame
+data <- data[ , !names(data) %in% c("Born","Surgery","Consented","Discharge")]
+#After generating two new variables, delete four original variables to make the data more concise
+```
+
+#### 2.3.2 Variable Missing Value in R
+
+ We first check the overall lack of data step by step.
+
+```{r echo=TRUE}
+#Count the number of all missing values
+sum(is.na(data))
+#Confirm the proportion of all missing values
+mean(is.na(data))
+#Count the number of incomplete samples in behavioral units
+sum(!complete.cases(data))
+#Proportion of incomplete samples
+mean(!complete.cases(data))
+```
+
+ It can be seen that there are not many missing values. Next, we use a more intuitive way to display the missing values in a list.
+
+```{r echo=TRUE, fig.height=5, fig.width=25}
+md.pattern(data)
+```
+
+ From the missing list, it can be found that 27 patients did not leave the hospital and died for various reasons. Therefore, their pulmonary function test and discharge date are missing, but we can't simply delete them. This part of the data can also judge the advantages and disadvantages of the operation. Therefore, we make the missing sequence into a separate data frame for observation.
+
+```{r echo=TRUE}
+list <-which(rowSums(is.na(data)) > 0)
+#Rows wicth missing values in the dataset.
+data_NA <- data[list,]
+#Extract rows with missing values.
+data <- data[-list,]
+#Produces a row with no missing values.
+sum(is.na(data))
+#Check the number of all missing values again.
+```
+
+#### 2.3.3 Variable Filtering
+
+ We analyzed the existing variables, some of which belong to preoperative patient indications, such as age, BMI, CCS, degree of chest pain, etc., and some belong to postoperative indicators, such as pain score, postoperative vital capacity, patient quality of life, etc. Our purpose is to analyze whether there are significant differences in preoperative patient characteristics and postoperative actual effects between the two surgical methods. Through the data research of relevant operations, we decided not to consider the variables: nurse and allocated. Delete these two variables to obtain a new data frame data.
+
+```{r echo=TRUE}
+data <- data[ , !names(data) %in% c("Nurse","Allocated")]
+```
+
+#### 2.3.4 Create subset
+
+ Then, we decided to create a variety of data subsets to facilitate subsequent research from different perspectives.\
+ In order to study the influencing factors that determine the operation mode, only the preoperative patient characteristic variables are selected to generate the data set 'data\_ before'； At the same time, for the possible follow-up research, we selected the postoperative characteristics and surgical methods to generate the data set 'data\_ after'。
+
+```{r echo=TRUE}
+data_before <- data[c("Received","EuroSCORE","Male","MI_stroke_TIA","CCS","BMI","COPD","WalkingUnassisted","CareHome","FEV1baseline","age")]
+data_after <- data[c("Received","NurseExperience","Pain","FEV1","Cost","QALYs","recovery_time")]
+```
+
+ Then we divide the data into 'data\_ FS' and 'data\_ MS'。
+
+```{r, echo=TRUE, message=TRUE, warning=FALSE}
+#According to the actual operation mode, FS and MS were divided into two new data sets
+data_FS <- data[which(data$Received == "FS"), ]
+data_MS <- data[which(data$Received == "MS"), ]
+```
+
+### 2.4 Research Method
+
+ Using R-4.0.5 software, the two groups of data were analyzed according to the way of operation, and the variables were tested by Wilcoxon rank-sum test. If P-value is less than 0.05, it can be considered that the difference is statistically significant. The stepwise regression method was used to help establish the LM regression model, find out the main influencing factors affecting the quality of life of postoperative patients, and verify the advantages and necessity of MS surgery. If P-value is less than 0.05, it can be considered that the model result is significant.
+
+## 3 Practical Data Analysis
+
+### 3.1 Descriptive Statistics
+
+#### 3.1.1 Preoperative Quantitative Variables
+
+ For preoperative data set 'data\_ Before 'quantitative variables were used to make density maps to observe the overall preoperative indications of the patients.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data_d1 <- data[c("Received","EuroSCORE","CCS","BMI","FEV1baseline","age")]
+p1 <- ggplot(data = data_d1, mapping = aes(
+   x = EuroSCORE, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "EuroSCORE",y = "Received")
+
+p2 <- ggplot(data = data_d1, mapping = aes(
+   x = CCS, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "CCS",y = "Received")
+
+p3 <- ggplot(data = data_d1, mapping = aes(
+   x = BMI, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "BMI",y = "Received")
+
+p4 <- ggplot(data = data_d1, mapping = aes(
+   x = FEV1baseline, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "FEV1baseline",y = "Received")
+
+p5 <- ggplot(data = data_d1, mapping = aes(
+   x = age, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) + labs(x = "age",y = "Received")
+
+multiplot(p1,p2,p3,p4,p5,cols = 2)
+```
+
+ The qualitative variables of preoperative data set'data_before' were visualized by mosaic plot, and the overall preoperative fingers of patients under the two surgical methods were observed.\
+ Male,MI_stroke_TIA,COPD,WalkingUnassisted,CareHome。\
+ In a mosaic plot, the area of a nested rectangle is proportional to the cell frequency, which is the frequency in the multidimensional contingency table. Colors and / or shadows can represent the residual values of the fitted model.
+
+```{r echo=TRUE, fig.height=6, fig.width=15, message=TRUE, warning=FALSE}
+data_e1 <- data[c("Received","Male","MI_stroke_TIA","COPD","WalkingUnassisted","CareHome")]
+mosaic(~Received+Male+MI_stroke_TIA+COPD+WalkingUnassisted+CareHome,data=data_e1,shade=TRUE,legend=TRUE)
+```
+
+#### 3.1.2 Preoperative Qualitative Variables
+
+ The distribution of classification variables in different operations of FS and MS was observed separately, and the stacked bar graph was used for visualization.
+
+```{r echo=TRUE, fig.height=6, fig.width=15, message=TRUE, warning=FALSE}
+data_e1_MS <- data_e1[which(data$Received == "MS"), ]
+data_e1_FS <- data_e1[which(data$Received == "FS"), ]
+
+data_e2_MS <- data.frame(variable=c("Male","MI_stroke_TIA","COPD","WalkingUnassisted","CareHome","Male","MI_stroke_TIA","COPD","WalkingUnassisted","CareHome"),
+                        number=c(length(which(data_e1_MS[,2]=="TRUE")),length(which(data_e1_MS[,3]=="TRUE")),length(which(data_e1_MS[,4]=="TRUE")),length(which(data_e1_MS[,5]=="TRUE")),length(which(data_e1_MS[,6]=="TRUE")),length(which(data_e1_MS[,2]=="FALSE")),length(which(data_e1_MS[,3]=="FALSE")),length(which(data_e1_MS[,4]=="FALSE")),length(which(data_e1_MS[,5]=="FALSE")),length(which(data_e1_MS[,6]=="FALSE"))),
+                        label=c("TRUE","TRUE","TRUE","TRUE","TRUE","FALSE","FALSE","FALSE","FALSE","FALSE"))
+
+data_e2_FS <- data.frame(variable=c("Male","MI_stroke_TIA","COPD","WalkingUnassisted","CareHome","Male","MI_stroke_TIA","COPD","WalkingUnassisted","CareHome"),
+                        number=c(length(which(data_e1_FS[,2]=="TRUE")),length(which(data_e1_FS[,3]=="TRUE")),length(which(data_e1_FS[,4]=="TRUE")),length(which(data_e1_FS[,5]=="TRUE")),length(which(data_e1_FS[,6]=="TRUE")),length(which(data_e1_FS[,2]=="FALSE")),length(which(data_e1_FS[,3]=="FALSE")),length(which(data_e1_FS[,4]=="FALSE")),length(which(data_e1_FS[,5]=="FALSE")),length(which(data_e1_FS[,6]=="FALSE"))),
+                        label=c("TRUE","TRUE","TRUE","TRUE","TRUE","FALSE","FALSE","FALSE","FALSE","FALSE"))
+
+ggplot(data_e2_MS,aes(variable,number,fill=label))+
+  geom_bar(stat="identity",position="stack",width = 0.7)
+ggplot(data_e2_FS,aes(variable,number,fill=label))+
+  geom_bar(stat="identity",position="stack",width = 0.7)
+
+```
+
+Conclusion:\
+ Overall, the patients who chose the two operations were relatively average.\
+ From the analysis of patient types, the main patients who underwent AVR surgery were men around the age of 61, and most of them had obesity problems. Half of the patients have COPD, but most of them can walk independently without nursing home care. Therefore, from the perspective of disease prevention, we can focus on middle-aged and elderly obese men and encourage them to have regular physical examination.\
+ It can be seen from CCS indicators that most patients have chest pain index exceeding 2 at the time of onset, and they often suffer from diseases. Therefore, choosing an appropriate operation is particularly important to help them achieve a high quality of life.\
+ From stroke mi\_ stroke\_ TIA index we can find that all patients have no stroke experience, so we can not consider adding this variable in some subsequent studies.\
+ The number and proportion of preoperative qualitative variables of the two surgical patients are relatively similar, so we can preliminarily conclude that there is no significant difference between preoperative variables, which will be verified by statistical methods in the future.
+
+#### 3.1.3 Postoperative Quantitative Variables
+
+ Data of postoperative data set\_ After visualization was performed to observe the overall situation of patients after operation. The characteristic variables of patients after operation were quantitative variables, so we did multi group density map visualization again.
+
+```{r echo=TRUE, message=FALSE}
+data_after <- data[c("Received","NurseExperience","Pain","FEV1","Cost","QALYs","recovery_time")]
+q1 <- ggplot(data = data_after, mapping = aes(
+   x = NurseExperience, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "NurseExperience",y = "Received")
+
+q2 <- ggplot(data = data_after, mapping = aes(
+   x = Pain, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "Pain",y = "Received")
+
+q3 <- ggplot(data = data_after, mapping = aes(
+   x = FEV1, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "FEV1",y = "Received")
+
+q4 <- ggplot(data = data_after, mapping = aes(
+   x = Cost, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) +labs(x = "Cost",y = "Received")
+
+q5 <- ggplot(data = data_after, mapping = aes(
+   x = QALYs, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) + labs(x = "QALYs",y = "Received")
+
+q6 <- ggplot(data = data_after, mapping = aes(
+   x = recovery_time, 
+   y = Received,
+   fill = Received))+ geom_density_ridges(alpha = 0.5) + guides(fill = FALSE) + labs(x = "recovery_time",y = "Received")
+
+multiplot(q1,q2,q3,q4,q5,q6,cols = 2)
+```
+
+#### 3.1.4 Comparison of Patient Mortality
+
+```{r}
+deathrate_MS <- (sum(data_NA$Received=='MS')/sum(data$Received=='MS'))
+deathrate_FS <- (sum(data_NA$Received=='FS')/sum(data$Received=='FS'))
+deathrate_FS
+deathrate_MS
+```
+
+#### 3.1.5 Comparison of Pulmonary Function Before and After Operation
+
+```{r echo=TRUE, fig.height=3, fig.width=10, message=FALSE}
+multiplot(q3,p4,cols = 2)
+```
+
+Conclusion:\
+ Through rough comparison, we can find that there is little difference in mortality between the two operations, and there is no significant difference between the two operations in terms of nurses' experience in testing pain index and changes in postoperative patients' lung function.\
+ In terms of operation cost, the cost of MS will be slightly higher than that of traditional FS; In terms of postoperative pain, Ms surgery is also higher and more expensive than traditional FS.\
+ However, in terms of postoperative quality of life, MS is greatly improved compared with FS, and the recovery time is shorter than that of traditional FS surgery.\
+ But at present, our conclusion only depends on the observation of the graph, and we need to verify our guess by further difference analysis with R.\
+ At the same time, according to the results of descriptive statistics, we also raised new questions. Can we find the main factors affecting the postoperative quality of life of patients by establishing LM model.
+
+### 3.2 Difference Analysis: Chi Square Test & Nonparametric Test
+
+ In order to prove that Ms surgery has obvious advantages over FS surgery, we need to carry out difference analysis, and carry out difference test on the same variable characteristics of patients undergoing different operations to find the results.\
+ From the previous references, we can find that in the comparative research papers of similar medical methods, chi square test is often used to analyze the difference of qualitative variables and t test is used to analyze the difference of quantitative variables. However, from the preliminary observation of the data, we can find that although the variables are divided into qualitative variables and quantitative variables, the quantitative variables do not meet the normal distribution. T-test belongs to parametric test, and its premise is that the test data must meet the normal distribution. Therefore, in this study, we will choose non parametric test to analyze the quantitative data.\
+ Nonparametric test is a method to infer the overall distribution form by using sample data when the overall variance is unknown or little known. Because the variables that need to compare differences cannot pass the normal test, we choose the Whitney rank sum test in the nonparametric test to test the two groups of independent samples. In addition, we choose to test the double paired samples.
+
+#### 3.2.1 Preoperative Qualitative Variables
+
+Methods:  Chi square fit test can be used to compare the observed distribution with the expected distribution when there are two or more categories of discrete data. Chi square fit test is used to judge the fitting degree of proportional distribution of different types of results relative to an expected distribution.
+
+ (1) gender male: the p value of the test is 1, which is greater than the significance level, alpha = 0.05. We can conclude that there is no significant difference between the observed proportion and the expected proportion.
+
+```{r echo=TRUE}
+before_Male <- data.frame(Male=c(length(which(data_e1_MS[,"Male"]=="TRUE")),length(which(data_e1_FS[,"Male"]=="TRUE"))),
+                    Female=c(length(which(data_e1_MS[,"Male"]=="FALSE")),length(which(data_e1_FS[,"Male"]=="FALSE"))))
+chisq.test(before_Male$Male,before_Male$Female)
+```
+
+ (2) COPD chronic obstructive pulmonary disease: the p value of the test is 1, which is greater than the significance level, alpha = 0.05. We can conclude that there is no significant difference between the observed proportion and the expected proportion.
+
+```{r echo=TRUE}
+before_COPD <- data.frame(COPD=c(length(which(data_e1_MS[,"COPD"]=="TRUE")),length(which(data_e1_FS[,"COPD"]=="TRUE"))),
+                    NO_COPD=c(length(which(data_e1_MS[,"COPD"]=="FALSE")),length(which(data_e1_FS[,"COPD"]=="FALSE"))))
+chisq.test(before_COPD$COPD,before_COPD$NO_COPD)
+```
+
+ (3) Comparison of walkingunassisted independent walking: the p value of the test is 1, which is greater than the significance level, alpha = 0.05. We can conclude that there is no significant difference between the observed proportion and the expected proportion.
+
+```{r echo=TRUE}
+before_WalkingUnassisted <- data.frame(WalkingUnassisted=c(length(which(data_e1_MS[,"WalkingUnassisted"]=="TRUE")),length(which(data_e1_FS[,"WalkingUnassisted"]=="TRUE"))),
+                    NO_WalkingUnassisted=c(length(which(data_e1_MS[,"WalkingUnassisted"]=="FALSE")),length(which(data_e1_FS[,"WalkingUnassisted"]=="FALSE"))))
+chisq.test(before_WalkingUnassisted$WalkingUnassisted,before_WalkingUnassisted$NO_WalkingUnassisted)
+```
+
+ (4) Whether carehome needs human care: the p value of the test is 1, which is greater than the significance level, alpha = 0.05. We can conclude that there is no significant difference between the observed proportion and the expected proportion.
+
+```{r echo=TRUE}
+before_CareHome <- data.frame(CareHome=c(length(which(data_e1_MS[,"CareHome"]=="TRUE")),length(which(data_e1_FS[,"CareHome"]=="TRUE"))),
+                    NO_CareHome=c(length(which(data_e1_MS[,"CareHome"]=="FALSE")),length(which(data_e1_FS[,"CareHome"]=="FALSE"))))
+chisq.test(before_CareHome$CareHome,before_CareHome$NO_CareHome)
+```
+
+Conclusion:\
+ There is no significant difference in the proportion of qualitative variables between the two surgical methods.
+
+#### 3.2.2 Preoperative Quantitative Variables
+
+Method:  Mann-whitney-u test, Mann Whitney rank sum test, was proposed by H.B. Mann and D.R. Whitney in 1947. It assumes that the two samples are from two populations that are exactly the same except the population mean, in order to test whether there is a significant difference between the mean of the two populations.
+
+```{r echo=TRUE}
+wilcox.test(data_MS$age,data_FS$age)
+wilcox.test(data_MS$BMI,data_FS$BMI)
+wilcox.test(data_MS$CCS,data_FS$CCS)
+wilcox.test(data_MS$FEV1baseline,data_FS$FEV1baseline)
+wilcox.test(data_MS$NurseExperience,data_FS$NurseExperience)
+wilcox.test(data_MS$EuroSCORE,data_FS$EuroSCORE)
+```
+
+Result:  The P values of all test results are greater than 0.05. We can consider that there is no significant difference between the two variables.
+
+Conclusion:\
+ There is no significant difference in quantitative variables between the two surgical methods.
+
+#### 3.2.3 Analysis of Postoperative Variables
+
+```{r echo=TRUE}
+wilcox.test(data_MS$recovery_time,data_FS$recovery_time)
+wilcox.test(data_MS$Cost,data_FS$Cost)
+wilcox.test(data_MS$Pain,data_FS$Pain)
+wilcox.test(data_MS$FEV1,data_FS$FEV1)
+wilcox.test(data_MS$QALYs,data_FS$QALYs)
+```
+
+Result:  The P values of all test results are less than 0.05. We can consider that there is a significant difference between the two variables.
+
+Conclusion:\
+ There were significant differences in the above postoperative variables between the two surgical methods.
+
+#### 3.2.4 The Same Index - Comparison of Pulmonary Function
+
+Methods:\
+ We selected Wilcoxon paired rank sum test, which is an improvement of sign sign test. Its hypothesis is reduced to whether the overall median is 0. The applicable condition is double paired sample test.
+
+Results:\
+ The results showed that there were significant changes in vital capacity before and after the two operations.
+
+```{r echo=TRUE}
+with(data_MS,wilcox.test(FEV1baseline,FEV1,paired = TRUE))
+#Changes of vital capacity after MS surgery
+with(data_FS,wilcox.test(FEV1baseline,FEV1,paired = TRUE))
+#Changes of vital capacity after FS surgery
+```
+
+Conclusion:  The difference analysis further verifies our conclusion in visualization, that is, there is no significant difference between MS operation and FS in preoperative patient indications, but there are differences between MS operation and FS in postoperative indexes. MS has the advantages of short postoperative recovery time and higher postoperative quality of life. However, it still has some disadvantages, such as high operation cost and high pain index. Therefore, it may cause difficulties for patients with poor families, but his advantages are still significant. It is believed that Ms surgery will be widely popularized and applied in clinic in the near future.
+
+### 3.3 LM Regression Model
+
+ From the difference analysis, we can find that there is no significant difference in preoperative variables between the two operations. Therefore, we can think that there are no other influencing factors in the selection of the two operations. Then we conducted LM regression. We hope to establish a model to find out the main factors affecting the quality of life of postoperative patients.
+
+#### 3.3.1 Viewing Quantitative Variable Correlation: Correlation Coefficient Matrix
+
+```{r include=FALSE}
+#剔除上文中已经确定无影响的变量MI_stroke_TIA
+data1 <- data[ , !names(data) %in% c("MI_stroke_TIA")]
+```
+
+ For the visualization of correlation coefficient, we choose the triangular cell plus pie chart, as shown in the figure. The blue and the slash from the bottom left to the top right indicate that the two variables in the cell are positively correlated.\
+ Conversely, red and a slash from top left to bottom right indicate a negative correlation between variables. The darker the color, the greater the correlation of the variables. Cells with a correlation close to 0 are basically colorless. In order to gather variables with similar correlation patterns, the rows and columns of the matrix are reordered (using the principal component method).\
+ It can be seen from the shaded cells in the figure that there is correlation between QALYs and other variables. There is a strong positive correlation between fev1baseline and FEV1. Age and pain were strongly negatively correlated with each other. We can also see that the correlation between other variables is very weak.\
+ Finally, we choose to eliminate age, CCS and FEV1.
+
+```{r echo=TRUE, fig.height=7, fig.width=7, message=TRUE, warning=FALSE}
+corrgram(data1,order=TRUE,lower.panel=panel.shade,upper.panel=panel.pie,text.panel=panel.txt, main="correlogram of intercorrelations")
+```
+
+#### 3.3.2 Use LM to Find Out the Main Factors Affecting the Postoperative Quality of Life
+
+##### 3.3.2.1 Preliminary Regression
+
+ We can find that the fitting degree of the model is not high. We suspect that this is due to the existence of multicollinearity between variables. Therefore, in order to solve the possible multicollinearity, we use the stepwise regression method to select the most appropriate model. When the AIC value reaches the minimum, the selected variables will be re used for LM regression.
+
+```{r, echo=TRUE, message=TRUE, warning=FALSE}
+model1 <- lm(QALYs ~ Received+EuroSCORE+Male+CCS+BMI+COPD+WalkingUnassisted+CareHome+FEV1baseline+NurseExperience+Pain+Cost+age+recovery_time,data1)
+summary(model1)
+```
+
+##### 3.3.2.2 Stepwise Regression - We Choose the Model with the Smallest AIC Value
+
+```{r}
+lm.step <- step(model1)
+```
+
+Conclusion:  The final model and variable obtained by stepwise regression is QALYs \~ received + male + fev1baseline + cost, which meets the minimum value of AIC = -2704.58.
+
+##### 3.3.2.3 Thirdly, the modified model is fitted
+
+```{r}
+model2 <- lm(QALYs ~ Received + Male + FEV1baseline + Cost, data=data1)
+summary(model2)
+```
+
+#### 3.3.3 Model Test
+
+##### 3.3.3.1 Significance Test
+
+ According to the goodness of fit R \^ 2 = 0.1021, we can find that the fitting degree of the model is still not high, but the p value \< 0.05, the model is still significant.
+
+##### 3.3.3.2 Heteroscedasticity Test
+
+ According to the diagram, we can think that the model has no obvious heteroscedasticity problem.
+
+```{r echo=TRUE}
+par(mfrow=c(2,2))
+e <- resid(model2)
+plot(e)
+d <- e/sqrt(deviance(model2)/919) #Standardized residual
+hist(d,probability = T)     
+#Draw regression standardized residual probability diagram
+lines(density(d),col='red')  #Add regression line
+qqnorm(d) #Normality test of QQ-plot
+qqline(d) #Add trend lin
+r <- rstudent(model2)
+plot(data$QALYs,r,ylim = c(-4,4),xlim = c(0,1)) 
+#Normalized residuals versus response variable graphs
+```
+
+Conclusion:\
+ From this, we can think that the model is feasible. Our conclusion is also preliminarily established.
+
+## 4 Conclusions
+
+### 4.1 Research Findings
+
+ Through the difference analysis of the same variables of different operations, we can find that there is no significant difference between the two operations in preoperative patient indications. We can think that the experimental data are random in operation selection; In addition, we can see that the recovery time and quality of life of MS surgery are significantly different from those of traditional FS surgery.\
+ In addition, we established LM regression model through stepwise regression method, and finally found out that the two main factors affecting the postoperative quality of life of patients are the mode of operation, MS or FS, and the cost of treatment.
+
+### 4.2 Specific Analysis of Main Influencing Factors
+
+ In terms of operation mode, the quality of life of patients who choose MS mode will be higher than FS mode.\
+ In terms of treatment cost, the more the operation cost, the better the postoperative quality of life of patients. We know that the cost of MS surgery is higher than that of FS, but there are many factors that determine the cost of surgery, such as the patient's age and illness experience. Therefore, it is not easy to simply reduce the treatment cost of patients.
+
+### 4.3 Suggestions and Countermeasures
+
+ Through comprehensive analysis, we can think that Ms surgery has obvious advantages over FS surgery and can significantly improve the postoperative quality of life of patients. However, as a new surgical method, Ms still has the disadvantage of high cost, and high cost will often become a difficulty for many patients. Therefore, we can hope that this operation can be rapidly developed and popularized in the new era, so as to gradually reduce the operation cost and benefit more patients.\
+ In addition, from the analysis of patient characteristics, we also found the main population requiring AVR surgery, men around the age of 60, especially patients with chronic obstructive pulmonary disease and other related diseases. Therefore, we can advocate and promote regular physical examination, encourage these groups to strengthen exercise, and curb the emergence of the disease from the source of the disease, so as to further improve people's quality of life.
+
+## 5.Reference
+
+[1]王征. 右胸小切口与胸骨正中切口二尖瓣置换术的临床对照研究[D]. 浙江大学, 2011.
+
+[2]陈海生, 程云阁, 钟焕清,等. 胸腔镜与开胸手术治疗先天性心脏病的疗效比较[J]. 中国微创外科杂志, 2005, 5(008):634-635.
+
+[3] Lydia R , Michael R , Steven H . Is a port-access mitral valve repair superior to the sternotomy approach in accelerating postoperative recovery?[J]. Interactive Cardiovascular & Thoracic Surgery(4):678.
+
+[4] Paul M , Ansar H , Randolph C W . Minimally invasive mitral valve surgery: a systematic review and meta-analysis.[J]. Eur J Cardiothorac Surg, 2008(5):943-952.
+
+[5] Cosgrove D M , Sabik J F . Minimally invasive approach for aortic valve operations.[J]. Annals of Thoracic Surgery, 1996, 62(2):596-597.

@@ -1,0 +1,19 @@
+@phdthesis{RN2,
+   author = {王征},
+   title = {右胸小切口与胸骨正中切口二尖瓣置换术的临床对照研究},
+   university = {浙江大学},
+   year = {2011},
+   type = {Thesis}
+}
+
+@article{RN1,
+   author = {陈海生 and 程云阁 and 钟焕清 and 黄志辉 and 谢翠贤 and 程国栋},
+   title = {胸腔镜与开胸手术治疗先天性心脏病的疗效比较},
+   journal = {中国微创外科杂志},
+   volume = {5},
+   number = {008},
+   pages = {634-635},
+   year = {2005},
+   type = {Journal Article}
+}
+

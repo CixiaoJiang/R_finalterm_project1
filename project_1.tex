@@ -1,0 +1,1528 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={R trialdata\_report},
+  pdfauthor={Cixiao Jiang, Mengjin Yan, Yu Pan, Xin Ye},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{R trialdata\_report}
+\author{Cixiao Jiang, Mengjin Yan, Yu Pan, Xin Ye}
+\date{10/06/2021}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5173ux4e8emsux624bux672fux5b9eux65bdux548cux53d1ux5c55ux7684ux53efux884cux6027ux7814ux7a76data-from-the-patient-survey-on-time-to-postoperative-discharge-after-aortic-valve-replacement}{%
+\section{《关于MS手术实施和发展的可行性研究------data from the patient
+survey on time to postoperative discharge after aortic valve
+replacement》}\label{ux5173ux4e8emsux624bux672fux5b9eux65bdux548cux53d1ux5c55ux7684ux53efux884cux6027ux7814ux7a76data-from-the-patient-survey-on-time-to-postoperative-discharge-after-aortic-valve-replacement}}
+
+\hypertarget{ux6458ux8981}{%
+\subsection{摘要}\label{ux6458ux8981}}
+
+ 目的：\\
+ Aortic valve replacement (AVR) is a common surgical procedure to treat
+heart diseases such as aortic stenosis. Full sternotomy (FS) is
+considered the `gold standard' surgical procedure for AVR, while
+Mini-sternotomy (MS) is an alter- native procedure that is attractive
+due to potentially shorter patient recovery times.
+FS手术属于AVR手术的标准方式，而MS则属于一种新型治疗手段,虽然在术后恢复情况上优于前者，但是目前我们对MS手术的安全性及治疗效果都有一些疑问尚未研究清楚。本次研究我们希望通过对比的方法,比较490例FS与429例MS手术的患者相关手术指征与术后效果等,对MS手术的疗效和安全性作客观评价。
+同时我们希望进一步研究影响AVR手术患者术后生活质量的主要因素是否是手术方式的改进，换句话说，我们希望证明MS手术的研究与推广在临床方面具有实践意义。
+
+ 方法：\\
+ 
+将患者按照实际进行手术的方式分组。分别比较两组术前一般情况(年龄、性别、BMI等),术后情况(肺活量、恢复时间等),及随访时情况(术后生活质量)。再建立LM回归模型，找出影响AVR手术患者术后生活质量的主要影响因素。研究使用R-4.0.5软件处理、分析两组数据并建立模型,定性变量和定量变量均使用惠特曼秩和检验,P小于0.05认为差异有统计学意义；LM模型使用逐步回归法来减小多重共线性带来的影响，P小于0.05认为模型显著。
+
+ 结果：\\
+ 
+两组在术前指标以及进行测试的护士工作经验等方面的比较,可以认为差异无统计学意义(P大于0.05)；FS手术组死亡14病例,MS手术组死亡13例，两组死亡率较为相似。在术后情况以及患者术后生活质量方面比较,可以认为差异具有统计学意义(P小于0.05)。LM模型得出影响患者术后生活质量的主要影响因素是手术方式以及医院的开销。
+
+ 结论：\\
+ 
+我们可以看出MS手术具有安全和有效性,它与FS手术相比较,创伤更小，疼痛程度更小，恢复时间更短,患者的术后生活质量也会相对较高，虽然手术费用也相应更高，但是综合看来，MS手术值得在临床推广应用，它的研究和发展是具有积极意义的。
+
+\hypertarget{ux80ccux666fux7efcux8ff0introduction}{%
+\subsection{1.背景综述（Introduction）}\label{ux80ccux666fux7efcux8ff0introduction}}
+
+ 
+主动脉瓣膜替换术（AVR）是一种以人工瓣膜替换原有病变或者异常心脏瓣膜的胸心血管外科手术，以主动脉瓣狭窄和主动脉瓣反流为适应证。主动脉瓣替换术（AVR）可以通过两种途径进行：正中胸骨切开术（FS）或上胸骨小切口术（MS）。
+（下面这段抄来的，我担心重复性过高，翻译的时候可以适当的删减，留出重点。）\\
+  MS approach. With the patient anesthetized in accordance with standard
+protocol, skin was incised from halfway between the suprasternal notch
+and the sternal angle to the level of the fourth intercostal space,
+approximately 8 cm. The manubrium was divided in the midline from the
+suprasternal notch inferiorly and then into the right fourth intercostal
+space. The thymus was divided, and the pericardium was opened, exposing
+the ascending aorta, aortic root, and right atrial appendage. A 300 U/kg
+loading dose of unfractionated heparin followed by boluses of 5000 U was
+administered to achieve activated clotting time \textgreater450 seconds.
+The aorta was cannulated using a wired flexible aortic cannula. The
+right atrial appendage was cannulated using a flat venous cannula, and
+CPB was initiated. The ascending aorta was cross-clamped and
+intermittent, antegrade, cold blood cardioplegia administered. The aorta
+was then incised open in an oblique or transverse fashion, the diseased
+valve was excised, and the annulus was decalcified. A suitably sized
+aortic valve prosthesis was inserted using either horizontal mattress
+2-0 Ethicon sutures or semi-continuous 2-0 Proline sutures. Surgeons
+adopted either of these suture techniques and adhered to the same
+technique irrespective of the type of valve prosthesis or the surgical
+approach. The autotomy was then closed, the heart was deaired, right
+atrial and ventricular epicardial pacing wires were inserted, and the
+patient was weaned off. Once satisfactory functioning of the aortic
+valve prosthesis was confirmed by TOE, heparin was reversed with
+protamine (1 mg/100 U of heparin). Chest drains were inserted into the
+anterior mediastinum, posterior pericardial space, and pleural space as
+necessary. Sternal wires were inserted, and the incision was closed in
+layers. Conversion to FS was performed to ensure patient safety if
+access proved difficult or if intraoperative complications occurred.\\
+  FS approach. Anesthesia and positioning of patients was the same as
+for the MS approach. The skin incision was made between the suprasternal
+notch and the xiphoid process and sternum divided in the midline from
+the suprasternal notch to the xiphoid process. A 2-stage venous cannula
+was used for atrial cannulation. The remaining steps were similar to
+those for the MS approach.\\
+ 
+从两种手术的操作方式我们可以看出，MS手术的创口相对较小且疼痛程度较轻，相对于传统的FS手术方式具有明显优势，但是对于它的安全和有效性尚不明确，我们需要通过研究来进一步验证我们的猜测。希望通过对两种AVR手术方式的研究，我们可以得到对患者临床治疗有利的结果。
+
+\hypertarget{data-and-statistical-methodology}{%
+\subsection{2.Data and Statistical
+Methodology}\label{data-and-statistical-methodology}}
+
+\hypertarget{ux7814ux7a76ux5bf9ux8c61}{%
+\subsubsection{2.1研究对象}\label{ux7814ux7a76ux5bf9ux8c61}}
+
+  The Rdata file contains the simulated results, trialdata, of a
+clinical trial comparing patients who underwent MS to patients who
+underwent FS.其中包括24个变量。
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.45}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.55}}@{}}
+\toprule
+Variable name & Variable meaning \\
+\midrule
+\endhead
+PatientId & a unique numerical identier for each patient \\
+Allocated & the surgery (MS or FS) which the patient was scheduled to
+undergo \\
+Received & the actual surgery (MS or FS) that the patient underwent \\
+Born & the patient's date of birth \\
+Surgery & the patient's date of surgery \\
+Consented & the date on which the patient consented to participate in
+the study \\
+EuroSCORE & a measure of the patient's risk of death (as a
+percentage),calculated prior to surgery \\
+Male & a binary variable taking the value TRUE if the patient is ma, or
+FALSE otherwise \\
+MIstrokeTIA & a binary variable indicating whether the patient had
+suffered a myocardial infarction, stroke or a transient ischaemic attack
+in the 30 days prior to surgery \\
+CCS & a measure of the severity of the patient's chest pain on a scale
+of 0 to 4 (Canadian Cardiovascular Society classication of angina). \\
+BMI & body mass index (kg=m2), a measure of the patient's obesity. \\
+COPD & a binary variable indicating whether the patient had chronic ob-
+structive pulmonary disease prior to surgery. \\
+WalkingUnassisted & a binary variable indicating whether the patient was
+able to walk without assistance prior to surgery. \\
+CareHome & a binary variable indicating whether the patient lives in a
+care home. \\
+FEV1baseline & pre-surgery lung function, FEV1 (forced expiratory volume
+in one second), measured by spirometry (litres). \\
+Discharge & the date of the patient's discharge from hospital (i.e.~the
+end of the patient's post-operative hospital stay). \\
+DeathDate & the date of death for any patients who died within a year of
+surgery. \\
+CauseOfDeath & the cause of death for any patients who died within a
+year of surgery. \\
+Nurse & a unique identier for the nurse who measured the patient's
+pain. \\
+NurseExperience & the number of years of experience of the nurse who
+measured the patient's pain score. \\
+Pain & the patient's post-operative pain score, on a scale of 0 to 100,
+on the day after surgery. \\
+FEV1 & post-surgery lung function, FEV1 (forced expiratory volume in one
+second), measured by spirometry (litres) on the day of the patient's
+hospital discharge. \\
+Cost & relevant costs (\$) over the first year following surgery
+(including the costs of surgeries, drugs and hospital visits). \\
+QALYs & quality adjusted life years, a measure of the patient's quality
+of life in the year after surgery, on a scale of 0 to 1. \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{ux6570ux636eux5bfcux5165}{%
+\subsubsection{2.2数据导入}\label{ux6570ux636eux5bfcux5165}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#载入用到的数据和包}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"\textasciitilde{}/Desktop/Clinical trial data 对比"}\NormalTok{)}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{get}\NormalTok{(}\FunctionTok{load}\NormalTok{(}\StringTok{"\textasciitilde{}/Desktop/Clinical trial data 对比/TrialData.Rdata"}\NormalTok{))}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lattice) }
+\FunctionTok{library}\NormalTok{(MASS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'MASS'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     select
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(nnet)}
+\FunctionTok{library}\NormalTok{(mice)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'mice'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     cbind, rbind
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(corrgram)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'corrgram'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:lattice':
+## 
+##     panel.fill
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(vcd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: grid
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(stats) }
+\FunctionTok{library}\NormalTok{(zoo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lmtest)}
+\FunctionTok{library}\NormalTok{(gvlma) }
+\FunctionTok{library}\NormalTok{(Rmisc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: plyr
+\end{verbatim}
+
+\begin{verbatim}
+## ------------------------------------------------------------------------------
+\end{verbatim}
+
+\begin{verbatim}
+## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)
+\end{verbatim}
+
+\begin{verbatim}
+## ------------------------------------------------------------------------------
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'plyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:corrgram':
+## 
+##     baseball
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(plyr)}
+\FunctionTok{library}\NormalTok{(ggridges)}
+\FunctionTok{library}\NormalTok{(glmnet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## Loaded glmnet 4.1-1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(foreign)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux6570ux636eux5904ux7406}{%
+\subsubsection{2.3 数据处理}\label{ux6570ux636eux5904ux7406}}
+
+\hypertarget{ux53d8ux91cfux8f6cux6362}{%
+\paragraph{2.3.1变量转换}\label{ux53d8ux91cfux8f6cux6362}}
+
+ 
+由现有的数据我们看到，其中包含了五列日期，分别是出生日期，接受调查时间，手术时间，出院时间和死亡时间。\\
+ 
+（1）由于随访时间仅为术后一年，因此绝大部分患者在随访时间处于生存状态，又因为死亡的患者中，死亡原因多样化，难以具体分析是否与手术有关，因此我们暂时不考虑死亡时间，将死亡时间与死亡原因两列删除。\\
+ 
+（2）随后，由出生时间和手术时间我们可以求出患者在手术时的年龄，由手术时间和出院时间我们可以求出术后患者的恢复时间，分别建立两个新的变量，年龄（单位：年），恢复时间（单位：天）。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#由出生日期和接受手术日期求出做手术时年龄}
+\NormalTok{data }\OtherTok{=} \FunctionTok{mutate}\NormalTok{(data, }\AttributeTok{age=}\FunctionTok{year}\NormalTok{(}\FunctionTok{as.period}\NormalTok{(}\FunctionTok{interval}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Born, data}\SpecialCharTok{$}\NormalTok{Surgery),}\StringTok{\textquotesingle{}year\textquotesingle{}}\NormalTok{)))}\CommentTok{\#数据中用赋值来增加一列年龄}
+\NormalTok{age }\OtherTok{\textless{}{-}} \FunctionTok{year}\NormalTok{(}\FunctionTok{as.period}\NormalTok{(}\FunctionTok{interval}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Born, data}\SpecialCharTok{$}\NormalTok{Surgery),}\StringTok{\textquotesingle{}year\textquotesingle{}}\NormalTok{))}
+\CommentTok{\#由出院时间和接受手术日期求出术后恢复时间}
+\NormalTok{data }\OtherTok{=} \FunctionTok{mutate}\NormalTok{(data, }\AttributeTok{recovery\_time=}\FunctionTok{day}\NormalTok{(}\FunctionTok{as.period}\NormalTok{(}\FunctionTok{interval}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Surgery, data}\SpecialCharTok{$}\NormalTok{Discharge),}\StringTok{\textquotesingle{}day\textquotesingle{}}\NormalTok{)))}\CommentTok{\#数据中用赋值来增加一列术后恢复时间}
+\NormalTok{recovery\_time }\OtherTok{\textless{}{-}} \FunctionTok{day}\NormalTok{(}\FunctionTok{as.period}\NormalTok{(}\FunctionTok{interval}\NormalTok{(trialdata}\SpecialCharTok{$}\NormalTok{Surgery, trialdata}\SpecialCharTok{$}\NormalTok{Discharge),}\StringTok{\textquotesingle{}day\textquotesingle{}}\NormalTok{))}
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data[ , }\SpecialCharTok{!}\FunctionTok{names}\NormalTok{(data) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"DeathDate"}\NormalTok{,}\StringTok{"CauseOfDeath"}\NormalTok{)] }\CommentTok{\#选择除了这两个变量以外的所有变量，生成新数据框}
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data[ , }\SpecialCharTok{!}\FunctionTok{names}\NormalTok{(data) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Born"}\NormalTok{,}\StringTok{"Surgery"}\NormalTok{,}\StringTok{"Consented"}\NormalTok{,}\StringTok{"Discharge"}\NormalTok{)]}
+\CommentTok{\#生成两个新变量后删除四个原有变量，让数据更简洁}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux53d8ux91cfux7f3aux5931ux503cux68c0ux67e5}{%
+\paragraph{2.3.2变量缺失值检查}\label{ux53d8ux91cfux7f3aux5931ux503cux68c0ux67e5}}
+
+  我们首先逐步检查数据整体缺失情况。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#统计数据所有缺失值的个数}
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 54
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#确认所有缺失值占的比例}
+\FunctionTok{mean}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.002854123
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#以行为单位，不完整样本的个数}
+\FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{complete.cases}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 27
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#不完整样本的比例}
+\FunctionTok{mean}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{complete.cases}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.02854123
+\end{verbatim}
+
+  由此可见缺失值并没有很多，接下来我们用更直观的方式，列表显示缺失值。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{md.pattern}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{verbatim}
+##     PatientId Allocated Received EuroSCORE Male MI_stroke_TIA CCS BMI COPD
+## 919         1         1        1         1    1             1   1   1    1
+## 27          1         1        1         1    1             1   1   1    1
+##             0         0        0         0    0             0   0   0    0
+##     WalkingUnassisted CareHome FEV1baseline Nurse NurseExperience Pain Cost
+## 919                 1        1            1     1               1    1    1
+## 27                  1        1            1     1               1    1    1
+##                     0        0            0     0               0    0    0
+##     QALYs age FEV1 recovery_time   
+## 919     1   1    1             1  0
+## 27      1   1    0             0  2
+##         0   0   27            27 54
+\end{verbatim}
+
+ 
+由缺失列表可以发现有27位患者并没有出院，术后由于各种原因死亡。因此他们的肺功能检测和出院日期出现了缺失现象，但是我们不能简单的做删除处理，这一部分的数据同样可以判断手术的优劣。因此，我们将缺失的数列单独做成数据框观察。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{list }\OtherTok{\textless{}{-}}\FunctionTok{which}\NormalTok{(}\FunctionTok{rowSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data)) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\CommentTok{\# data数据集中有缺失值的行。}
+\NormalTok{data\_NA }\OtherTok{\textless{}{-}}\NormalTok{ data[list,]}\CommentTok{\#提取有缺失值的行。}
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data[}\SpecialCharTok{{-}}\NormalTok{list,]}\CommentTok{\# 产生无缺失值的行。}
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data))}\CommentTok{\#再次检查所有缺失值的个数}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\hypertarget{ux53d8ux91cfux7b5bux9009}{%
+\paragraph{2.3.3变量筛选}\label{ux53d8ux91cfux7b5bux9009}}
+
+ 
+我们将现有的变量进行分析，一部分属于术前患者指征，如：年龄，BMI，CCS胸痛程度等等，一部分属于术后指标，如：疼痛评分，术后肺活量，患者生活质量等。
+我们的目的是分析出两种手术方法的术前患者特征以及术后实际效果有无明显区别，通过对相关手术的资料研究，我们决定不考虑变量：Nurse,Allocated.将这两个变量删除后得到新的数据框data。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data[ , }\SpecialCharTok{!}\FunctionTok{names}\NormalTok{(data) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Nurse"}\NormalTok{,}\StringTok{"Allocated"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux521bux5efaux5b50ux96c6}{%
+\paragraph{2.3.4 创建子集}\label{ux521bux5efaux5b50ux96c6}}
+
+  紧接着，我们决定创造多种数据子集以方便后续从不同的角度出发研究问题。\\
+ 
+为了研究决定手术方式的影响因素，仅选取术前的患者特征变量，生成数据集data\_before；同时为了后续可能进行的研究，我们选取术后的特征以及手术方式，生成数据集data\_after。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_before }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{c}\NormalTok{(}\StringTok{"Received"}\NormalTok{,}\StringTok{"EuroSCORE"}\NormalTok{,}\StringTok{"Male"}\NormalTok{,}\StringTok{"MI\_stroke\_TIA"}\NormalTok{,}\StringTok{"CCS"}\NormalTok{,}\StringTok{"BMI"}\NormalTok{,}\StringTok{"COPD"}\NormalTok{,}\StringTok{"WalkingUnassisted"}\NormalTok{,}\StringTok{"CareHome"}\NormalTok{,}\StringTok{"FEV1baseline"}\NormalTok{,}\StringTok{"age"}\NormalTok{)]}
+\NormalTok{data\_after }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{c}\NormalTok{(}\StringTok{"Received"}\NormalTok{,}\StringTok{"NurseExperience"}\NormalTok{,}\StringTok{"Pain"}\NormalTok{,}\StringTok{"FEV1"}\NormalTok{,}\StringTok{"Cost"}\NormalTok{,}\StringTok{"QALYs"}\NormalTok{,}\StringTok{"recovery\_time"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+  然后我们按照实际进行的手术，将数据分为data\_FS与data\_MS。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#将患者情况按照实际手术方式FS和MS分成两个新的数据集}
+\NormalTok{data\_FS }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{which}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Received }\SpecialCharTok{==} \StringTok{"FS"}\NormalTok{), ]}
+\NormalTok{data\_MS }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{which}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Received }\SpecialCharTok{==} \StringTok{"MS"}\NormalTok{), ]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux7814ux7a76ux65b9ux6cd5}{%
+\subsubsection{2.4 研究方法}\label{ux7814ux7a76ux65b9ux6cd5}}
+
+ 
+使用R-4.0.5软件处理，按照进行手术的方式分析两组数据，并对变量进行惠特曼秩和检验，P小于0.05可以认为差异有统计学意义。使用逐步回归法帮助建立LM回归模型，找出影响术后患者生活质量的主要影响因素，验证MS手术的优势和必要性，P小于0.05可以认为模型结果显著。
+
+\hypertarget{practical-data-analysis}{%
+\subsection{3.Practical Data Analysis}\label{practical-data-analysis}}
+
+\hypertarget{ux63cfux8ff0ux6027ux7edfux8ba1}{%
+\subsubsection{3.1描述性统计}\label{ux63cfux8ff0ux6027ux7edfux8ba1}}
+
+  对整体数据进行描述性统计。\\
+\#\#\#\# 3.1.1术前定量变量  
+对术前数据集data\_before的定量变量分别作密度图，观察患者整体的术前指征。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_d1 }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{c}\NormalTok{(}\StringTok{"Received"}\NormalTok{,}\StringTok{"EuroSCORE"}\NormalTok{,}\StringTok{"CCS"}\NormalTok{,}\StringTok{"BMI"}\NormalTok{,}\StringTok{"FEV1baseline"}\NormalTok{,}\StringTok{"age"}\NormalTok{)]}
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_d1, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ EuroSCORE, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"EuroSCORE"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_d1, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ CCS, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"CCS"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_d1, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ BMI, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"BMI"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_d1, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ FEV1baseline, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"FEV1baseline"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{p5 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_d1, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ age, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"age"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\FunctionTok{multiplot}\NormalTok{(p1,p2,p3,p4,p5,}\AttributeTok{cols =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+ 
+对术前数据集data\_before的定性变量用马赛克图做可视化，观察两种手术方式下，患者整体的术前指征Male,MI\_stroke\_TIA,COPD,WalkingUnassisted,CareHome。在马赛克图中，嵌套矩形面积正比于单元格频率，其中该频率即多维列联表中的频率。颜色和/或阴影可表示拟合模型的残差值。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_e1 }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{c}\NormalTok{(}\StringTok{"Received"}\NormalTok{,}\StringTok{"Male"}\NormalTok{,}\StringTok{"MI\_stroke\_TIA"}\NormalTok{,}\StringTok{"COPD"}\NormalTok{,}\StringTok{"WalkingUnassisted"}\NormalTok{,}\StringTok{"CareHome"}\NormalTok{)]}
+\FunctionTok{mosaic}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Received}\SpecialCharTok{+}\NormalTok{Male}\SpecialCharTok{+}\NormalTok{MI\_stroke\_TIA}\SpecialCharTok{+}\NormalTok{COPD}\SpecialCharTok{+}\NormalTok{WalkingUnassisted}\SpecialCharTok{+}\NormalTok{CareHome,}\AttributeTok{data=}\NormalTok{data\_e1,}\AttributeTok{shade=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{legend=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\hypertarget{ux672fux524dux5b9aux6027ux53d8ux91cf}{%
+\paragraph{3.1.2术前定性变量}\label{ux672fux524dux5b9aux6027ux53d8ux91cf}}
+
+  分开观察FS和MS不同手术中，各分类变量的分布情况，用堆叠条形图做可视化。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_e1\_MS }\OtherTok{\textless{}{-}}\NormalTok{ data\_e1[}\FunctionTok{which}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Received }\SpecialCharTok{==} \StringTok{"MS"}\NormalTok{), ]}
+\NormalTok{data\_e1\_FS }\OtherTok{\textless{}{-}}\NormalTok{ data\_e1[}\FunctionTok{which}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Received }\SpecialCharTok{==} \StringTok{"FS"}\NormalTok{), ]}
+
+\NormalTok{data\_e2\_MS }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{variable=}\FunctionTok{c}\NormalTok{(}\StringTok{"Male"}\NormalTok{,}\StringTok{"MI\_stroke\_TIA"}\NormalTok{,}\StringTok{"COPD"}\NormalTok{,}\StringTok{"WalkingUnassisted"}\NormalTok{,}\StringTok{"CareHome"}\NormalTok{,}\StringTok{"Male"}\NormalTok{,}\StringTok{"MI\_stroke\_TIA"}\NormalTok{,}\StringTok{"COPD"}\NormalTok{,}\StringTok{"WalkingUnassisted"}\NormalTok{,}\StringTok{"CareHome"}\NormalTok{),}
+                        \AttributeTok{number=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{5}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{6}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{5}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\DecValTok{6}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{))),}
+                        \AttributeTok{label=}\FunctionTok{c}\NormalTok{(}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{))}
+
+\NormalTok{data\_e2\_FS }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{variable=}\FunctionTok{c}\NormalTok{(}\StringTok{"Male"}\NormalTok{,}\StringTok{"MI\_stroke\_TIA"}\NormalTok{,}\StringTok{"COPD"}\NormalTok{,}\StringTok{"WalkingUnassisted"}\NormalTok{,}\StringTok{"CareHome"}\NormalTok{,}\StringTok{"Male"}\NormalTok{,}\StringTok{"MI\_stroke\_TIA"}\NormalTok{,}\StringTok{"COPD"}\NormalTok{,}\StringTok{"WalkingUnassisted"}\NormalTok{,}\StringTok{"CareHome"}\NormalTok{),}
+                        \AttributeTok{number=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{5}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{6}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{3}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{4}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{5}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\DecValTok{6}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{))),}
+                        \AttributeTok{label=}\FunctionTok{c}\NormalTok{(}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"TRUE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{,}\StringTok{"FALSE"}\NormalTok{))}
+
+\FunctionTok{ggplot}\NormalTok{(data\_e2\_MS,}\FunctionTok{aes}\NormalTok{(variable,number,}\AttributeTok{fill=}\NormalTok{label))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{position=}\StringTok{"stack"}\NormalTok{,}\AttributeTok{width =} \FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(data\_e2\_FS,}\FunctionTok{aes}\NormalTok{(variable,number,}\AttributeTok{fill=}\NormalTok{label))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{position=}\StringTok{"stack"}\NormalTok{,}\AttributeTok{width =} \FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-10-2.pdf}  
+结论：   整体来看选择两种手术的患者较为平均。  
+从患者类型分析，做AVR手术的主要是61岁左右的男性且大多身体有肥胖问题。一半的患者都存在慢阻肺疾病但绝大部分都可以独立行走不需要养老院照顾。因此，从疾病预防角度，我们可以重点关注中老年肥胖男性，鼓励他们定期体检。\\
+ 
+从CCS指标可以看出大多数患者在发病时胸痛指数超过了2，他们往往饱受疾病困扰。因此选择一个合适的手术，对于帮助他们获得高质量生活，尤为重要。\\
+ 
+从中风MI\_stroke\_TIA指数我们可以发现，全部患者都没有中风经历，因此，后续的一些研究中，我们可以不考虑加入这个变量。\\
+ 
+两种手术患者术前定性变量的数目和比例都较为相似，因此我们可以初步得出结论，术前的变量之间不存在显著差异，后续我们会用统计学方法验证。
+
+\hypertarget{ux672fux540eux5b9aux91cfux53d8ux91cf}{%
+\paragraph{3.1.3术后定量变量}\label{ux672fux540eux5b9aux91cfux53d8ux91cf}}
+
+ 
+对术后数据集data\_after做可视化，观察患者术后的整体情况。术后的患者特征变量均为定量变量，因此我们再次做多组密度图可视化。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_after }\OtherTok{\textless{}{-}}\NormalTok{ data[}\FunctionTok{c}\NormalTok{(}\StringTok{"Received"}\NormalTok{,}\StringTok{"NurseExperience"}\NormalTok{,}\StringTok{"Pain"}\NormalTok{,}\StringTok{"FEV1"}\NormalTok{,}\StringTok{"Cost"}\NormalTok{,}\StringTok{"QALYs"}\NormalTok{,}\StringTok{"recovery\_time"}\NormalTok{)]}
+\NormalTok{q1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_after, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ NurseExperience, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"NurseExperience"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{q2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_after, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ Pain, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Pain"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{q3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_after, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ FEV1, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"FEV1"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{q4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_after, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ Cost, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Cost"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{q5 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_after, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ QALYs, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"QALYs"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\NormalTok{q6 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_after, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+   \AttributeTok{x =}\NormalTok{ recovery\_time, }
+   \AttributeTok{y =}\NormalTok{ Received,}
+   \AttributeTok{fill =}\NormalTok{ Received))}\SpecialCharTok{+} \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"recovery\_time"}\NormalTok{,}\AttributeTok{y =} \StringTok{"Received"}\NormalTok{)}
+
+\FunctionTok{multiplot}\NormalTok{(q1,q2,q3,q4,q5,q6,}\AttributeTok{cols =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\hypertarget{ux60a3ux8005ux6b7bux4ea1ux7387ux5bf9ux6bd4}{%
+\paragraph{3.1.4患者死亡率对比}\label{ux60a3ux8005ux6b7bux4ea1ux7387ux5bf9ux6bd4}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{deathrate\_MS }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(data\_NA}\SpecialCharTok{$}\NormalTok{Received}\SpecialCharTok{==}\StringTok{\textquotesingle{}MS\textquotesingle{}}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Received}\SpecialCharTok{==}\StringTok{\textquotesingle{}MS\textquotesingle{}}\NormalTok{))}
+\NormalTok{deathrate\_FS }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(data\_NA}\SpecialCharTok{$}\NormalTok{Received}\SpecialCharTok{==}\StringTok{\textquotesingle{}FS\textquotesingle{}}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Received}\SpecialCharTok{==}\StringTok{\textquotesingle{}FS\textquotesingle{}}\NormalTok{))}
+\NormalTok{deathrate\_FS}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.02857143
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{deathrate\_MS}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.03030303
+\end{verbatim}
+
+\hypertarget{ux624bux672fux524dux540eux80baux529fux80fdux5bf9ux6bd4}{%
+\paragraph{3.1.5手术前后肺功能对比}\label{ux624bux672fux524dux540eux80baux529fux80fdux5bf9ux6bd4}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{multiplot}\NormalTok{(q3,p4,}\AttributeTok{cols =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+ 结论：\\
+ 
+通过粗略对比我们可以发现，两种手术的死亡率差别不大，且在测试疼痛指数的护士经验和术后患者的肺功能变化上，两种手术也没有什么显著差别。\\
+ 
+在手术花费上，MS用的费用会比传统的FS稍微高一些；在术后疼痛程度上MS手术也比传统的FS更加高,花费上也更高。\\
+ 
+但是在术后生活质量上，MS相较于FS有较大的提升，在恢复时间上也比传统的FS手术要短。\\
+ 
+不过目前我们的结论仅仅取决于图形的观察，我们还要通过用R进一步进行差异分析来验证我们的猜测。\\
+ 
+同时根据描述性统计的结果，我们还产生了新的问题，我们是否可以通过建立LM模型，找到影响患者术后生活质量的主要因素。
+
+\hypertarget{ux5deeux5f02ux6027ux5206ux6790ux5361ux65b9ux68c0ux9a8cux975eux53c2ux6570ux68c0ux9a8c}{%
+\subsubsection{3.2
+差异性分析：卡方检验\&非参数检验}\label{ux5deeux5f02ux6027ux5206ux6790ux5361ux65b9ux68c0ux9a8cux975eux53c2ux6570ux68c0ux9a8c}}
+
+ 
+为了证明MS手术相对于FS手术具有明显优势，我们需要进行差异性分析，分别对进行不同手术的患者的相同变量特征进行差异性检验来找到结果。\\
+ 
+从以往的参考资料中我们可以发现，在类似的医疗方法对比研究论文中往往采用卡方检验对定性变量做差异性分析，利用T检验对定量变量进行差异性分析。但是从数据初步观察中我们可以发现，变量虽然分为定性变量和定量变量，但是定量变量不满足正态分布。T检验属于参数检验，其前提是检验数据必须满足正态分布，因此在本文研究中，我们将选择非参数检验对定量数据进行分析。\\
+ 
+非参数检验是在总体方差未知或知道甚少的情况下，利用样本数据对总体分布形态进行推断的方法。由于需要比较差异的变量无法通过正态检验，因此我们选用非参数检验中的惠特尼秩和检验对两组独立样本进行检验，另外我们选用，对双配对样本进行检验。
+
+\hypertarget{ux672fux524dux5b9aux6027ux53d8ux91cf-1}{%
+\paragraph{3.2.1
+术前定性变量}\label{ux672fux524dux5b9aux6027ux53d8ux91cf-1}}
+
+ 方法：卡方检验
+卡方拟合度检验可以用于在有两个或多个类别的离散数据的情况，将观察到的分布与期望分布进行比较。卡方拟合度检验用于判断不同类型结果的比例分布相对于一个期望分布的拟合程度。\\
+ （1）性别Male:检验的p值为1，大于显着性水平alpha =
+0.05。我们可以得出结论，观察到的比例与预期比例没有显着差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{before\_Male }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Male=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"Male"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"Male"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{))),}
+                    \AttributeTok{Female=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"Male"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"Male"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{))))}
+\FunctionTok{chisq.test}\NormalTok{(before\_Male}\SpecialCharTok{$}\NormalTok{Male,before\_Male}\SpecialCharTok{$}\NormalTok{Female)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in chisq.test(before_Male$Male, before_Male$Female): Chi-squared
+## approximation may be incorrect
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  before_Male$Male and before_Male$Female
+## X-squared = 0, df = 1, p-value = 1
+\end{verbatim}
+
+ (2)COPD慢阻肺情况：检验的p值为1，大于显着性水平alpha =
+0.05。我们可以得出结论，观察到的比例与预期比例没有显著差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{before\_COPD }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{COPD=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"COPD"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"COPD"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{))),}
+                    \AttributeTok{NO\_COPD=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"COPD"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"COPD"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{))))}
+\FunctionTok{chisq.test}\NormalTok{(before\_COPD}\SpecialCharTok{$}\NormalTok{COPD,before\_COPD}\SpecialCharTok{$}\NormalTok{NO\_COPD)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in chisq.test(before_COPD$COPD, before_COPD$NO_COPD): Chi-squared
+## approximation may be incorrect
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  before_COPD$COPD and before_COPD$NO_COPD
+## X-squared = 0, df = 1, p-value = 1
+\end{verbatim}
+
+ (3)WalkingUnassisted独立行走情况对比：检验的p值为1，大于显着性水平alpha
+= 0.05。我们可以得出结论，观察到的比例与预期比例没有显著差异 。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{before\_WalkingUnassisted }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{WalkingUnassisted=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"WalkingUnassisted"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"WalkingUnassisted"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{))),}
+                    \AttributeTok{NO\_WalkingUnassisted=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"WalkingUnassisted"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"WalkingUnassisted"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{))))}
+\FunctionTok{chisq.test}\NormalTok{(before\_WalkingUnassisted}\SpecialCharTok{$}\NormalTok{WalkingUnassisted,before\_WalkingUnassisted}\SpecialCharTok{$}\NormalTok{NO\_WalkingUnassisted)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in chisq.test(before_WalkingUnassisted$WalkingUnassisted,
+## before_WalkingUnassisted$NO_WalkingUnassisted): Chi-squared approximation may be
+## incorrect
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  before_WalkingUnassisted$WalkingUnassisted and before_WalkingUnassisted$NO_WalkingUnassisted
+## X-squared = 0, df = 1, p-value = 1
+\end{verbatim}
+
+ （4）CareHome是否需要人照顾：检验的p值为1，大于显着性水平alpha =
+0.05。我们可以得出结论，观察到的比例与预期比例没有显著差异 。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{before\_CareHome }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{CareHome=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"CareHome"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"CareHome"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"TRUE"}\NormalTok{))),}
+                    \AttributeTok{NO\_CareHome=}\FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_MS[,}\StringTok{"CareHome"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{)),}\FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(data\_e1\_FS[,}\StringTok{"CareHome"}\NormalTok{]}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{))))}
+\FunctionTok{chisq.test}\NormalTok{(before\_CareHome}\SpecialCharTok{$}\NormalTok{CareHome,before\_CareHome}\SpecialCharTok{$}\NormalTok{NO\_CareHome)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in chisq.test(before_CareHome$CareHome, before_CareHome$NO_CareHome):
+## Chi-squared approximation may be incorrect
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  before_CareHome$CareHome and before_CareHome$NO_CareHome
+## X-squared = 0, df = 1, p-value = 1
+\end{verbatim}
+
+ 结论：两种手术方式在患者定性变量的比例上没有显著差别。
+
+\hypertarget{ux672fux524dux5b9aux91cfux53d8ux91cf}{%
+\paragraph{3.2.2
+术前定量变量}\label{ux672fux524dux5b9aux91cfux53d8ux91cf}}
+
+ 方法：Mann-Whitney-U检验，曼-惠特尼秩和检验，是由H.B.Mann和D.R.Whitney于1947年提出的。它假设两个样本分别来自除了总体均值以外完全相同的两个总体，目的是检验这两个总体的均值是否有显著的差别。\\
+ （1）年龄：结果显示P大于0.05,证明两种手术病人的年龄不存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{age,data\_FS}\SpecialCharTok{$}\NormalTok{age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$age and data_FS$age
+## W = 104736, p-value = 0.9267
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （2）BMI：结果显示P大于0.05,证明两种手术病人的BMI不存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{BMI,data\_FS}\SpecialCharTok{$}\NormalTok{BMI)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$BMI and data_FS$BMI
+## W = 106145, p-value = 0.7946
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （3）CCS：结果显示P大于0.05,证明两种手术病人的CCS不存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{CCS,data\_FS}\SpecialCharTok{$}\NormalTok{CCS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$CCS and data_FS$CCS
+## W = 105441, p-value = 0.9312
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （4）术前肺功能FEV1baseline：结果显示P大于0.05,证明两种手术病人的FEV1baseline术前肺功能不存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{FEV1baseline,data\_FS}\SpecialCharTok{$}\NormalTok{FEV1baseline)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$FEV1baseline and data_FS$FEV1baseline
+## W = 106176, p-value = 0.7898
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （5）护士经验：结果显示P大于0.05,证明两种手术病人的NurseExperience不存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{NurseExperience,data\_FS}\SpecialCharTok{$}\NormalTok{NurseExperience)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$NurseExperience and data_FS$NurseExperience
+## W = 101326, p-value = 0.3412
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （6）死亡风险指标EuroSCORE：结果显示P大于0.05,证明两种手术病人的EuroSCORE不存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{EuroSCORE,data\_FS}\SpecialCharTok{$}\NormalTok{EuroSCORE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$EuroSCORE and data_FS$EuroSCORE
+## W = 106864, p-value = 0.6556
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ 结论：两种手术方式在患者定量变量上没有显著差别。
+
+\hypertarget{ux672fux540eux53d8ux91cfux5deeux5f02ux5206ux6790}{%
+\paragraph{3.2.3
+术后变量差异分析}\label{ux672fux540eux53d8ux91cfux5deeux5f02ux5206ux6790}}
+
+ （1）术后恢复时间recovery\_time：结果显示P小于0.05,证明两种手术病人的术后恢复时间上存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{recovery\_time,data\_FS}\SpecialCharTok{$}\NormalTok{recovery\_time)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$recovery_time and data_FS$recovery_time
+## W = 85202, p-value = 6.745e-07
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （2）费用：结果显示P小于0.05,证明两种手术病人在手术花费上存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{Cost,data\_FS}\SpecialCharTok{$}\NormalTok{Cost)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$Cost and data_FS$Cost
+## W = 118072, p-value = 0.001238
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （3）疼痛指数：结果显示P小于0.05,证明两种手术病人在术后疼痛指数上存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{Pain,data\_FS}\SpecialCharTok{$}\NormalTok{Pain)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$Pain and data_FS$Pain
+## W = 136250, p-value = 8.456e-15
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （4）术后肺功能FEV1：结果显示P小于0.05,证明两种手术病人在术后肺活量上存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{FEV1,data\_FS}\SpecialCharTok{$}\NormalTok{FEV1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$FEV1 and data_FS$FEV1
+## W = 90534, p-value = 0.0002841
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ （5）生活质量QALYs：结果显示P小于0.05,证明两种手术病人在术后生活质量上存在显著性差异。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wilcox.test}\NormalTok{(data\_MS}\SpecialCharTok{$}\NormalTok{QALYs,data\_FS}\SpecialCharTok{$}\NormalTok{QALYs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  data_MS$QALYs and data_FS$QALYs
+## W = 133445, p-value = 1.668e-12
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+\hypertarget{ux540cux4e00ux79cdux6307ux6807ux80baux529fux80fdux5bf9ux6bd4}{%
+\paragraph{3.2.4
+同一种指标------肺功能对比}\label{ux540cux4e00ux79cdux6307ux6807ux80baux529fux80fdux5bf9ux6bd4}}
+
+ 方法：我们选用Wilcoxon配对秩和检验，Wilcoxon配对秩和检验是对Sign符号检验的改进。它的假设被归结为总体中位数是否为0。适用条件为双配对样本检验。\\
+ 结果：结果显示两种手术，手术前后肺活量上均有显著变化。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(data\_MS,}\FunctionTok{wilcox.test}\NormalTok{(FEV1baseline,FEV1,}\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{))}\CommentTok{\#MS手术肺活量变化}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  FEV1baseline and FEV1
+## V = 77452, p-value < 2.2e-16
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(data\_FS,}\FunctionTok{wilcox.test}\NormalTok{(FEV1baseline,FEV1,}\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{))}\CommentTok{\#FS手术肺活量变化}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  FEV1baseline and FEV1
+## V = 76358, p-value = 2.354e-07
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+ 结论：差异性分析进一步验证了我们在可视化时的结论，即：MS手术在术前患者指征上与FS无明显差异，但在术后的各项指标中与FS相比均有差异。MS的优点在于术后恢复时间短，术后生活质量更高。但它仍然存在一些缺点，如：手术费用较高，疼痛指数较高等。因此对于家庭贫困的患者来说或许会造成困难，但他的优点依然显著，相信不久的将来，MS手术会在临床方面获得广泛推广和应用。
+
+\hypertarget{lmux56deux5f52ux6a21ux578b}{%
+\subsubsection{3.3 LM回归模型}\label{lmux56deux5f52ux6a21ux578b}}
+
+ 从差异性分析中我们可以发现，两种手术的术前变量上均不存在显著差异，因此我们可以认为，两种手术在选择上不存在其他影响因素。随后我们进行LM回归，我们希望通过建立模型来找出影响术后患者生活质量的主要影响因素。
+
+\hypertarget{ux67e5ux770bux5b9aux91cfux53d8ux91cfux76f8ux5173ux6027ux76f8ux5173ux7cfbux6570ux77e9ux9635}{%
+\paragraph{3.3.1查看定量变量相关性：相关系数矩阵}\label{ux67e5ux770bux5b9aux91cfux53d8ux91cfux76f8ux5173ux6027ux76f8ux5173ux7cfbux6570ux77e9ux9635}}
+
+ 相关系数的可视化我们选用三角单元格加饼图的方式，如图所示蓝色和从左下指向右上的斜杠表示单元格中的两个变量呈正相关。反过来，红色和从左上指向右下的斜杠表示变量呈负相关。色彩越深，说明变量相关性越大。相关性接近于0的单元格基本无色。本图为了将有相似相关模式的变量聚集在一起，对矩阵的行和列都重新进行了排序（使用主成分法）。\\
+ 从图中含阴影的单元格中可以看到，QALYs和其他变量间都存在相关性。FEV1baseline和FEV1相互间呈强正相关。age和pain互相间呈强负相关。我们还可以看到其他变量间的相关性很弱。因此我们主要考虑
+ 上三角单元格用饼图展示了相同的信息。颜色的功能同上，但相关性大小由被填充的饼图块的大小来展示。正相关性将从12点钟处开始顺时针填充饼图，而负相关性则逆时针方向填充饼图。\\
+ 经过对比，我们选择剔除age，CCS，FEV1这四个变量。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{corrgram}\NormalTok{(data1,}\AttributeTok{order=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{lower.panel=}\NormalTok{panel.shade,}\AttributeTok{upper.panel=}\NormalTok{panel.pie,}\AttributeTok{text.panel=}\NormalTok{panel.txt, }\AttributeTok{main=}\StringTok{"correlogram of intercorrelations"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+\hypertarget{ux7528lmux627eux51faux5f71ux54cdux60a3ux8005ux672fux540eux751fux6d3bux8d28ux91cfux7684ux4e3bux8981ux56e0ux7d20}{%
+\paragraph{3.4.2
+用lm找出影响患者术后生活质量的主要因素}\label{ux7528lmux627eux51faux5f71ux54cdux60a3ux8005ux672fux540eux751fux6d3bux8d28ux91cfux7684ux4e3bux8981ux56e0ux7d20}}
+
+\hypertarget{ux521dux6b65ux56deux5f52}{%
+\subparagraph{3.4.2.1初步回归：}\label{ux521dux6b65ux56deux5f52}}
+
+ 我们可以发现模型拟合度不高，我们怀疑这是由于变量间存在多重共线性导致的，因此为了解决可能存在的多重共线性，我们用逐步回归法选出最合适的模型，用AIC值达到最小时，选择的变量重新做LM回归。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(QALYs }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Received}\SpecialCharTok{+}\NormalTok{EuroSCORE}\SpecialCharTok{+}\NormalTok{Male}\SpecialCharTok{+}\NormalTok{CCS}\SpecialCharTok{+}\NormalTok{BMI}\SpecialCharTok{+}\NormalTok{COPD}\SpecialCharTok{+}\NormalTok{WalkingUnassisted}\SpecialCharTok{+}\NormalTok{CareHome}\SpecialCharTok{+}\NormalTok{FEV1baseline}\SpecialCharTok{+}\NormalTok{NurseExperience}\SpecialCharTok{+}\NormalTok{Pain}\SpecialCharTok{+}\NormalTok{Cost}\SpecialCharTok{+}\NormalTok{age}\SpecialCharTok{+}\NormalTok{recovery\_time,data1)}
+\FunctionTok{summary}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = QALYs ~ Received + EuroSCORE + Male + CCS + BMI + 
+##     COPD + WalkingUnassisted + CareHome + FEV1baseline + NurseExperience + 
+##     Pain + Cost + age + recovery_time, data = data1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.66700 -0.13647  0.01186  0.15511  0.50170 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)            3.840e-01  2.694e-01   1.425    0.154    
+## ReceivedMS             1.220e-01  1.760e-02   6.929 8.03e-12 ***
+## EuroSCORE             -3.314e-03  4.068e-03  -0.815    0.415    
+## MaleTRUE              -4.566e-02  3.050e-02  -1.497    0.135    
+## CCS                   -2.677e-03  7.438e-03  -0.360    0.719    
+## BMI                   -8.109e-04  2.540e-03  -0.319    0.750    
+## COPDTRUE              -1.998e-02  1.631e-02  -1.225    0.221    
+## WalkingUnassistedTRUE  2.218e-02  3.739e-02   0.593    0.553    
+## CareHomeTRUE          -4.879e-03  1.853e-02  -0.263    0.792    
+## FEV1baseline           2.338e-02  1.525e-02   1.533    0.126    
+## NurseExperience        1.158e-03  1.147e-03   1.010    0.313    
+## Pain                   6.309e-04  1.314e-03   0.480    0.631    
+## Cost                  -5.885e-06  8.152e-07  -7.219 1.11e-12 ***
+## age                    2.313e-03  2.959e-03   0.782    0.435    
+## recovery_time          1.136e-03  9.236e-04   1.230    0.219    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2295 on 904 degrees of freedom
+## Multiple R-squared:  0.1116, Adjusted R-squared:  0.09779 
+## F-statistic: 8.108 on 14 and 904 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{ux9010ux6b65ux56deux5f52ux6211ux4eecux9009ux62e9aicux503cux6700ux5c0fux7684ux6a21ux578b}{%
+\subparagraph{3.4.2.2逐步回归------我们选择AIC值最小的模型}\label{ux9010ux6b65ux56deux5f52ux6211ux4eecux9009ux62e9aicux503cux6700ux5c0fux7684ux6a21ux578b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm.step }\OtherTok{\textless{}{-}} \FunctionTok{step}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Start:  AIC=-2690.33
+## QALYs ~ Received + EuroSCORE + Male + CCS + BMI + COPD + WalkingUnassisted + 
+##     CareHome + FEV1baseline + NurseExperience + Pain + Cost + 
+##     age + recovery_time
+## 
+##                     Df Sum of Sq    RSS     AIC
+## - CareHome           1   0.00365 47.621 -2692.2
+## - BMI                1   0.00537 47.623 -2692.2
+## - CCS                1   0.00682 47.624 -2692.2
+## - Pain               1   0.01215 47.629 -2692.1
+## - WalkingUnassisted  1   0.01854 47.636 -2692.0
+## - age                1   0.03218 47.649 -2691.7
+## - EuroSCORE          1   0.03496 47.652 -2691.7
+## - NurseExperience    1   0.05374 47.671 -2691.3
+## - COPD               1   0.07908 47.696 -2690.8
+## - recovery_time      1   0.07971 47.697 -2690.8
+## <none>                           47.617 -2690.3
+## - Male               1   0.11806 47.735 -2690.1
+## - FEV1baseline       1   0.12382 47.741 -2689.9
+## - Received           1   2.52924 50.146 -2644.8
+## - Cost               1   2.74531 50.362 -2640.8
+## 
+## Step:  AIC=-2692.25
+## QALYs ~ Received + EuroSCORE + Male + CCS + BMI + COPD + WalkingUnassisted + 
+##     FEV1baseline + NurseExperience + Pain + Cost + age + recovery_time
+## 
+##                     Df Sum of Sq    RSS     AIC
+## - BMI                1   0.00564 47.626 -2694.2
+## - CCS                1   0.00695 47.628 -2694.1
+## - Pain               1   0.01186 47.633 -2694.0
+## - WalkingUnassisted  1   0.01872 47.640 -2693.9
+## - age                1   0.03193 47.653 -2693.6
+## - EuroSCORE          1   0.03533 47.656 -2693.6
+## - NurseExperience    1   0.05308 47.674 -2693.2
+## - COPD               1   0.07951 47.700 -2692.7
+## - recovery_time      1   0.08117 47.702 -2692.7
+## <none>                           47.621 -2692.2
+## - Male               1   0.11819 47.739 -2692.0
+## - FEV1baseline       1   0.12394 47.745 -2691.9
+## - Received           1   2.54254 50.163 -2646.4
+## - Cost               1   2.74199 50.363 -2642.8
+## 
+## Step:  AIC=-2694.15
+## QALYs ~ Received + EuroSCORE + Male + CCS + COPD + WalkingUnassisted + 
+##     FEV1baseline + NurseExperience + Pain + Cost + age + recovery_time
+## 
+##                     Df Sum of Sq    RSS     AIC
+## - CCS                1   0.00663 47.633 -2696.0
+## - Pain               1   0.01300 47.639 -2695.9
+## - WalkingUnassisted  1   0.01940 47.646 -2695.8
+## - age                1   0.03408 47.661 -2695.5
+## - EuroSCORE          1   0.03563 47.662 -2695.5
+## - NurseExperience    1   0.05136 47.678 -2695.2
+## - COPD               1   0.08099 47.707 -2694.6
+## - recovery_time      1   0.08110 47.708 -2694.6
+## <none>                           47.626 -2694.2
+## - Male               1   0.11732 47.744 -2693.9
+## - FEV1baseline       1   0.12317 47.750 -2693.8
+## - Received           1   2.53812 50.165 -2648.4
+## - Cost               1   2.74270 50.369 -2644.7
+## 
+## Step:  AIC=-2696.02
+## QALYs ~ Received + EuroSCORE + Male + COPD + WalkingUnassisted + 
+##     FEV1baseline + NurseExperience + Pain + Cost + age + recovery_time
+## 
+##                     Df Sum of Sq    RSS     AIC
+## - Pain               1   0.00819 47.641 -2697.9
+## - WalkingUnassisted  1   0.01950 47.653 -2697.6
+## - age                1   0.02804 47.661 -2697.5
+## - EuroSCORE          1   0.03587 47.669 -2697.3
+## - NurseExperience    1   0.05324 47.686 -2697.0
+## - COPD               1   0.07649 47.710 -2696.5
+## - recovery_time      1   0.08302 47.716 -2696.4
+## <none>                           47.633 -2696.0
+## - Male               1   0.11667 47.750 -2695.8
+## - FEV1baseline       1   0.12217 47.755 -2695.7
+## - Received           1   2.65732 50.290 -2648.1
+## - Cost               1   2.73722 50.370 -2646.7
+## 
+## Step:  AIC=-2697.86
+## QALYs ~ Received + EuroSCORE + Male + COPD + WalkingUnassisted + 
+##     FEV1baseline + NurseExperience + Cost + age + recovery_time
+## 
+##                     Df Sum of Sq    RSS     AIC
+## - WalkingUnassisted  1    0.0195 47.661 -2699.5
+## - age                1    0.0283 47.670 -2699.3
+## - EuroSCORE          1    0.0359 47.677 -2699.2
+## - NurseExperience    1    0.0523 47.694 -2698.8
+## - COPD               1    0.0683 47.710 -2698.5
+## - recovery_time      1    0.0830 47.724 -2698.3
+## <none>                           47.641 -2697.9
+## - Male               1    0.1148 47.756 -2697.7
+## - FEV1baseline       1    0.1205 47.762 -2697.5
+## - Cost               1    2.7401 50.381 -2648.5
+## - Received           1    3.4731 51.114 -2635.2
+## 
+## Step:  AIC=-2699.48
+## QALYs ~ Received + EuroSCORE + Male + COPD + FEV1baseline + NurseExperience + 
+##     Cost + age + recovery_time
+## 
+##                   Df Sum of Sq    RSS     AIC
+## - age              1    0.0304 47.691 -2700.9
+## - EuroSCORE        1    0.0346 47.695 -2700.8
+## - NurseExperience  1    0.0526 47.713 -2700.5
+## - COPD             1    0.0669 47.728 -2700.2
+## - recovery_time    1    0.0828 47.744 -2699.9
+## <none>                         47.661 -2699.5
+## - Male             1    0.1129 47.774 -2699.3
+## - FEV1baseline     1    0.1176 47.778 -2699.2
+## - Cost             1    2.8036 50.464 -2648.9
+## - Received         1    3.4591 51.120 -2637.1
+## 
+## Step:  AIC=-2700.9
+## QALYs ~ Received + EuroSCORE + Male + COPD + FEV1baseline + NurseExperience + 
+##     Cost + recovery_time
+## 
+##                   Df Sum of Sq    RSS     AIC
+## - EuroSCORE        1    0.0318 47.723 -2702.3
+## - NurseExperience  1    0.0505 47.742 -2701.9
+## - COPD             1    0.0661 47.757 -2701.6
+## - recovery_time    1    0.0866 47.778 -2701.2
+## <none>                         47.691 -2700.9
+## - Male             1    0.1182 47.809 -2700.6
+## - FEV1baseline     1    0.1243 47.816 -2700.5
+## - Cost             1    2.7918 50.483 -2650.6
+## - Received         1    3.4569 51.148 -2638.6
+## 
+## Step:  AIC=-2702.28
+## QALYs ~ Received + Male + COPD + FEV1baseline + NurseExperience + 
+##     Cost + recovery_time
+## 
+##                   Df Sum of Sq    RSS     AIC
+## - NurseExperience  1    0.0487 47.772 -2703.3
+## - COPD             1    0.0674 47.791 -2703.0
+## - recovery_time    1    0.0881 47.811 -2702.6
+## <none>                         47.723 -2702.3
+## - Male             1    0.1198 47.843 -2702.0
+## - FEV1baseline     1    0.1250 47.848 -2701.9
+## - Cost             1    2.8282 50.551 -2651.4
+## - Received         1    3.4438 51.167 -2640.2
+## 
+## Step:  AIC=-2703.35
+## QALYs ~ Received + Male + COPD + FEV1baseline + Cost + recovery_time
+## 
+##                 Df Sum of Sq    RSS     AIC
+## - COPD           1    0.0635 47.835 -2704.1
+## - recovery_time  1    0.0880 47.860 -2703.7
+## <none>                       47.772 -2703.3
+## - Male           1    0.1212 47.893 -2703.0
+## - FEV1baseline   1    0.1257 47.897 -2702.9
+## - Cost           1    2.8357 50.607 -2652.3
+## - Received       1    3.4313 51.203 -2641.6
+## 
+## Step:  AIC=-2704.13
+## QALYs ~ Received + Male + FEV1baseline + Cost + recovery_time
+## 
+##                 Df Sum of Sq    RSS     AIC
+## - recovery_time  1    0.0807 47.916 -2704.6
+## <none>                       47.835 -2704.1
+## - Male           1    0.1197 47.955 -2703.8
+## - FEV1baseline   1    0.1220 47.957 -2703.8
+## - Cost           1    2.8118 50.647 -2653.6
+## - Received       1    3.4141 51.249 -2642.8
+## 
+## Step:  AIC=-2704.58
+## QALYs ~ Received + Male + FEV1baseline + Cost
+## 
+##                Df Sum of Sq    RSS     AIC
+## <none>                      47.916 -2704.6
+## - FEV1baseline  1    0.1227 48.039 -2704.2
+## - Male          1    0.1244 48.040 -2704.2
+## - Cost          1    2.8624 50.778 -2653.2
+## - Received      1    3.3339 51.250 -2644.8
+\end{verbatim}
+
+ 结论：由逐步回归我们最终得到的模型和变量是QALYs \textasciitilde{}
+Received + Male + FEV1baseline + Cost，它满足AIC=-2704.58达到最小值。
+
+\hypertarget{ux518dux6b21ux5bf9ux4feeux6b63ux540eux7684ux6a21ux578bux8fdbux884cux62dfux5408}{%
+\subparagraph{3.4.2.3再次对修正后的模型进行拟合}\label{ux518dux6b21ux5bf9ux4feeux6b63ux540eux7684ux6a21ux578bux8fdbux884cux62dfux5408}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(QALYs }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Received }\SpecialCharTok{+}\NormalTok{ Male }\SpecialCharTok{+}\NormalTok{ FEV1baseline }\SpecialCharTok{+}\NormalTok{ Cost, }\AttributeTok{data=}\NormalTok{data1)}
+\FunctionTok{summary}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = QALYs ~ Received + Male + FEV1baseline + Cost, data = data1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.6713 -0.1360  0.0096  0.1595  0.5087 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   5.318e-01  3.676e-02  14.465  < 2e-16 ***
+## ReceivedMS    1.217e-01  1.526e-02   7.975 4.55e-15 ***
+## MaleTRUE     -4.676e-02  3.036e-02  -1.540    0.124    
+## FEV1baseline  2.321e-02  1.517e-02   1.530    0.126    
+## Cost         -5.945e-06  8.046e-07  -7.389 3.33e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.229 on 914 degrees of freedom
+## Multiple R-squared:  0.106,  Adjusted R-squared:  0.1021 
+## F-statistic: 27.09 on 4 and 914 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{ux6a21ux578bux68c0ux9a8c}{%
+\paragraph{3.4.3模型检验}\label{ux6a21ux578bux68c0ux9a8c}}
+
+\hypertarget{ux663eux8457ux6027ux68c0ux9a8c}{%
+\subparagraph{3.4.3.1显著性检验}\label{ux663eux8457ux6027ux68c0ux9a8c}}
+
+ 根据拟合优度R\^{}2=0.1021,我们可以发现，模型的拟合程度依然不高，但是P值\textless0.05，模型依然是显著的。
+
+\hypertarget{ux5f02ux65b9ux5deeux68c0ux9a8c}{%
+\subparagraph{3.4.3.2异方差检验}\label{ux5f02ux65b9ux5deeux68c0ux9a8c}}
+
+ 根据图示我们可以认为，模型没有明显的异方差问题。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\NormalTok{e }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(model2)}
+\FunctionTok{plot}\NormalTok{(e)}
+\NormalTok{d }\OtherTok{\textless{}{-}}\NormalTok{ e}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{deviance}\NormalTok{(model2)}\SpecialCharTok{/}\DecValTok{919}\NormalTok{) }\CommentTok{\#标准化残差}
+\FunctionTok{hist}\NormalTok{(d,}\AttributeTok{probability =}\NormalTok{ T)      }\CommentTok{\#绘制回归标准化残差概率图}
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{density}\NormalTok{(d),}\AttributeTok{col=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)  }\CommentTok{\#添加回归线}
+\FunctionTok{qqnorm}\NormalTok{(d) }\CommentTok{\#QQ图正态性检验}
+\FunctionTok{qqline}\NormalTok{(d) }\CommentTok{\#添加趋势线}
+\NormalTok{r }\OtherTok{\textless{}{-}} \FunctionTok{rstudent}\NormalTok{(model2)}
+\FunctionTok{plot}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{QALYs,r,}\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{),}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)) }\CommentTok{\#标准化残差关于响应变量图}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{project_1_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+ 结论：由此我们可以认为模型是可行的。我们得到的结论也初步成立。
+
+\hypertarget{conclusions}{%
+\subsection{4.Conclusions}\label{conclusions}}
+
+\hypertarget{ux7814ux7a76ux6210ux679c}{%
+\subsubsection{4.1研究成果}\label{ux7814ux7a76ux6210ux679c}}
+
+ 通过对不同手术的相同变量做差异性分析，我们可以发现在术前患者指征上，两种手术没有显著性差别，我们可以认为实验数据在手术选择上是随机的；另外我们可以看出术后，MS手术在恢复时间和患者生活质量上都比传统的FS手术有显著差异。\\
+ 另外，我们通过逐步回归法，建立了LM回归模型，最后找出影响患者术后生活质量的两个最主要的因素就是手术的方式，MS还是FS，以及治疗的费用。
+
+\hypertarget{ux4e3bux8981ux5f71ux54cdux56e0ux7d20ux5177ux4f53ux5206ux6790}{%
+\subsubsection{4.2主要影响因素具体分析}\label{ux4e3bux8981ux5f71ux54cdux56e0ux7d20ux5177ux4f53ux5206ux6790}}
+
+ 手术方式上，选择MS方式的患者术后生活质量会比FS方式更高。\\
+ 在治疗费用上，花费越多的患者术后的生活质量也就越差。我们知道，MS手术的费用从图上看起来比FS偏高，但是决定手术费用的因素还有很多，如患者的年纪和患病经历等等。因此想要简单的降低患者的治疗费用并非易事。
+
+\hypertarget{ux5efaux8baeux4e0eux5bf9ux7b56}{%
+\subsubsection{4.3建议与对策}\label{ux5efaux8baeux4e0eux5bf9ux7b56}}
+
+ 通过综合的分析，我们可以认为，MS手术相较于FS手术，具有较为明显的优势，可以明显提高患者的术后生活质量，但是作为一项新开展的手术方式，MS依然存在着费用高等缺点，而费用高也往往会成为许多患者的难处。因此，我们可以寄希望于这项手术在新的时代获得快速地发展和推广，从而逐步降低手术费用，为更多的患者造福。\\
+ 另外，从患者特征来分析，我们也发现了需要做AVR手术的主要人群，60岁左右的男性，尤其是有慢阻肺等相关疾病的患者。因此我们可以提倡和推广定期体检，鼓励这些群体增强锻炼，从患病的源头遏制病情的出现，从而让人们的生活质量进一步提高。
+
+\hypertarget{reference}{%
+\subsection{5.Reference}\label{reference}}
+
+1.右胸小切口与胸骨正中切口'二尖瓣置换术的临床对照研究，王征，2011.10月。研究生毕业论文。
+2.https://zhuanlan.zhihu.com/p/137444372
+3.https://blog.csdn.net/renewallee/article/details/102992196
+4.https://cloud.tencent.com/developer/article/1553580
+5.https://www.jianshu.com/p/baa6b9da31ba 6.
+
+\end{document}
